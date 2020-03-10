@@ -1,0 +1,4 @@
+# CMAP input
+F 10 # Nuclear DoFs
+S 2  # Electronic DoFs
+
