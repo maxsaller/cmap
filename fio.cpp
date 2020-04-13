@@ -80,7 +80,7 @@ int commandline_logic( std::map<std::string, std::string> cargs ){
  * argument passed to the 
  *
  */
-int read_input( std::map<std::string, std::string> cargs, struct input &inp ) { 
+int read_input( std::map<std::string, std::string> cargs ) { 
     std::ifstream ifile;
     ifile.open( cargs["-input"], std::fstream::in );
     std::string line, kw;
@@ -90,9 +90,9 @@ int read_input( std::map<std::string, std::string> cargs, struct input &inp ) {
             std::istringstream l(line);
             l >> kw;
             if ( kw == "F" ) {
-                l >> inp.F;
+                l >> input.F;
             } else if ( kw == "S" ) {
-                l >> inp.S;
+                l >> input.S;
             }
         }
     } while ( ifile.good() ); 
