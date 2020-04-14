@@ -93,6 +93,14 @@ int read_input( std::map<std::string, std::string> cargs ) {
                 l >> input.F;
             } else if ( kw == "S" ) {
                 l >> input.S;
+            } else if ( kw == "bath" ) {
+                l >> input.bath;
+            } else if ( kw == "eta" ) {
+                l >> input.eta;
+            } else if ( kw == "kondo" ) {
+                l >> input.kondo;
+            } else if ( kw == "omegac" ) {
+                l >> input.omegac;
             }
         }
     } while ( ifile.good() ); 
