@@ -3,9 +3,9 @@
 void subsystem_init() {
 
     // Allocate Spin-Boson constant energy matrix
-    subsystem.V = new double * [input.S];
+    subsystem.V.resize(input.S);
     for ( int i=0; i<input.S; ++i ) {
-        subsystem.V[i] = new double [input.S];
+        subsystem.V[i].resize(input.S);
     }
     
     // Energies
@@ -24,22 +24,22 @@ void subsystem_init() {
                 << std::setw(8) << subsystem.V[1][1] << std::endl;
 
     // Allocate potential and force matrices
-    pot.V = new double * [input.S];
+    pot.V.resize(input.S);
     for ( int i=0; i<input.S; ++i ) {
-        pot.V[i] = new double [input.S];
+        pot.V[i].resize(input.S);
     }
-    pot.F0 = new double [input.S];
-    pot.F = new double ** [input.F];
+    pot.F0.resize(input.S);
+    pot.F.resize(input.F);
     for ( int i=0; i<input.S; ++i ) {
-        pot.F[i] = new double * [input.S];
+        pot.F[i].resize(input.S);
         for ( int j=0; j<input.S; ++j ) {
-            pot.F[i][j] = new double [input.S];
+            pot.F[i][j].resize(input.S);
         }
     }
 
     // Initialize standard deviations for nuclear distributions
-    bath.xsig = new double [input.F];
-    bath.psig = new double [input.F];
+    bath.xsig.resize( input.F );
+    bath.psig.resize( input.F );
     for ( int i=0; i<input.F; ++i ) {
         bath.xsig[i] = std::sqrt( 1 / ( 2. * bath.mass[i] * bath.omega[i] * \
          std::tanh( input.beta * bath.omega[i] / 2. ) ) );
@@ -83,11 +83,9 @@ void sample_subsystem() {
 
     std::normal_distribution<double> dist(0., sig );
 
-    for ( int i=0; i<input.F; ++i ) {
-        for ( int j=0; j<input.S; ++j ) {
-            traj.Xe[i][j] = dist(rgen);
-            traj.Pe[i][j] = dist(rgen);
-        }
+    for ( int i=0; i<input.S; ++i ) {
+        traj.Xe[i] = dist(rgen);
+        traj.Pe[i] = dist(rgen);
     }
 }
 
@@ -114,8 +112,8 @@ void sb_pot() {
 
     // Shift trace from matrices to state independent potential and force
     double trace = ( pot.V[0][0] + pot.V[1][1] ) / 2.;
-    pot.V[0][0] -+ trace;
-    pot.V[1][1] -+ trace;
+    pot.V[0][0] -= trace;
+    pot.V[1][1] -= trace;
     pot.V0 += trace;
 
     double ftrace [input.F];

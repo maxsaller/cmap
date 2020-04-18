@@ -1,14 +1,15 @@
 #include "common.h"
 #include "input.h"
 #include "output.h"
+#include "observables.h"
 #include "spin_boson.h"
 #include "spectral_density.h"
-
 
 struct subsystem_variables subsystem;
 struct trajectory_variables traj;
 struct input_variables input;
 struct bath_variables bath;
+struct observables obs;
 struct potential pot;
 
 // Start random number generator
@@ -39,15 +40,11 @@ int main( int argc, char** args ) {
     subsystem_init();
 
     // Initialise trajectory  arrays
-    traj.xn = new double [input.F];
-    traj.pn = new double [input.F];
-    traj.Xe = new double * [input.F];
-    traj.Pe = new double * [input.F];
-    for ( int i=0; i<input.F; ++i ) {
-        traj.Xe[i] = new double [input.S];
-        traj.Pe[i] = new double [input.S];
-    }
-
+    traj.xn.resize(input.F);
+    traj.pn.resize(input.F);
+    traj.Xe.resize(input.S);
+    traj.Pe.resize(input.S);
+    observables_init();
 
     /* =========================== TRAJECTORIES ============================ */
     std::cout << "\nTRAJECTORIES\n";
@@ -57,7 +54,14 @@ int main( int argc, char** args ) {
         sample_bath();
         sample_subsystem();
 
-        // Compute time-zero operators
+        // Compute time-zero operators and observables
+        time_zero_ops();
+        std::cout << "Trajectoy: " << t
+                  << "\n- sig_0 (0) = " << obs.si0
+                  << "\n- sig_x (0) = " << obs.sx0
+                  << "\n- sig_y (0) = " << obs.sy0
+                  << "\n- sig_z (0) = " << obs.sz0 << "\n\n";
+        observables( 0 );
 
         // Propagate trajectories
         for ( int ts=1; ts<=input.steps; ++ts ) {
@@ -65,6 +69,11 @@ int main( int argc, char** args ) {
             // Propagate for a single timesteps
 
             // Compute time-t operators
+            time_t_ops();
+
+            // Compute observables
+            observables( ts );
+
 
         }
 
@@ -73,6 +82,11 @@ int main( int argc, char** args ) {
 
     /* ======================== AVERAGING & OUTPUT ========================= */
 
+    // Average observable arrays
+    average();
+
+    // Output observables
+    write_observables();
+
     return 21;
 }
-

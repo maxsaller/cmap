@@ -11,7 +11,7 @@ bath   ohmic    # Type of spectral density
 kondo  0.2      # Kondo parameter (kondo=2*eta/pi)
 omegac 2.5      # Cutoff frequency
 
-traj   1        # Number of trajectories
+traj   100      # Number of trajectories
 steps  1000     # Number of timesteps
 dt     42.      # Timestep duration
 

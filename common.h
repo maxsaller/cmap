@@ -20,4 +20,5 @@ extern struct subsystem_variables subsystem;
 extern struct trajectory_variables traj;
 extern struct input_variables input;
 extern struct bath_variables bath;
+extern struct observables obs;
 extern struct potential pot;

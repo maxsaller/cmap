@@ -1,6 +1,6 @@
 #include "common.h"
+#include "output.h"
 
-void print_help();
 
 /*
  * int parse_commandline( int nargs, char** args , map<string, string> &cargs )
@@ -131,13 +131,3 @@ int read_input( std::map<std::string, std::string> cargs ) {
 }
 
 /*****************************************************************************/
-
-/*
- * void print_help()
- *
- * Prints command line help
- *
- */
-void print_help() {
-    std::cout << "HELP!" << std::endl;
-}

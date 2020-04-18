@@ -6,9 +6,10 @@ void init_debye_bath();
 void bath_init() {
     
     // Allocate memory for bath variables
-    bath.c = new double [input.F];
-    bath.omega = new double [input.F];
-    bath.mass = new double [input.F];
+    //bath.c = new double [input.F];
+    bath.c.resize( input.F );
+    bath.omega.resize( input.F );
+    bath.mass.resize( input.F );
 
     // Bath mode masses
     for ( int i=0; i < input.F; ++i ) {
@@ -52,7 +53,6 @@ void init_ohmic_bath() {
                 << " mode hamonic bath with Ohmic spectral density\n";
     
     // Discretize spectral density as per JCP 122, 084106 (2005)
-    #pragma omp parallel for
     for ( int i=0; i<input.F; ++i ) {
         bath.omega[input.F-1-i] = -input.omegac * std::log( (i+0.5)/input.F );
     }
@@ -60,7 +60,6 @@ void init_ohmic_bath() {
     // Calculate density of each frequency, spectral density and coefficients
     double density [input.F];
     double J [input.F];
-    #pragma omp parallel for
     for ( int i=0; i<input.F; ++i ) {
         density[i] = input.F / input.omegac * std::exp( -bath.omega[i]/input.omegac );
         J[i] = input.eta * bath.omega[i] * std::exp( - bath.omega[i]/input.omegac );
@@ -79,7 +78,6 @@ void init_debye_bath() {
                 << " mode hamonic bath with Debye spectral density\n";
 
     // Discretize spectral density as per JCP 122, 084106 (2005)
-    #pragma omp parallel for
     for ( int i=0; i<input.F; ++i ) {
         bath.omega[i] = input.omegac * std::tan( pi / 2. * (i+1)/(float)(input.F+1) );
     }
@@ -88,7 +86,6 @@ void init_debye_bath() {
     //self.eta * self.omegac * omega / (omega**2 + self.omegac**2)
     double density [input.F];
     double J [input.F];
-    #pragma omp parallel for
     for ( int i=0; i<input.F; ++i ) {
         density[i] = 2. * (input.F+1)/pi * input.omegac;
         density[i] = density[i] / (bath.omega[i]*bath.omega[i] + input.omegac*input.omegac);

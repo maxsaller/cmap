@@ -1,6 +1,7 @@
 #pragma once
 #include <complex>
 #include <random>
+#include <vector>
 
 // Physical constants
 const double pi = 3.141592653589793;
@@ -31,31 +32,62 @@ struct input_variables {
 
 struct bath_variables {
     public:
-        double * c;         // System-bath coupling coefficients
-        double * mass;      // Bath mode masses
-        double * omega;     // Bath mode freqencies
+        std::vector<double> c;      // System-bath coupling coefficients
+        std::vector<double> mass;   // Bath mode masses
+        std::vector<double> omega;  // Bath mode freqencies
 
-        double * xsig;      // Standard deviation for distribution of nuclerar x
-        double * psig;      // Standard deviation for distribution of nuclerar p
+        std::vector<double> xsig;   // Standard deviation for distribution of nuclerar x
+        std::vector<double> psig;   // Standard deviation for distribution of nuclerar p
 };
 
 struct subsystem_variables {
     public:
-        double ** V;        // Potential energy matrix - constant
+        std::vector< std::vector<double> > V;   // Potential energy matrix - constant
 };
 
 struct potential {
     public:
-        double     V0;
-        double **  V;
-        double *   F0;
-        double *** F;
+        double V0;                                              // State-independent potential
+        std::vector< std::vector<double> >  V;                  // Potential energy matrix
+        std::vector< double > F0;                               // State-independent fortce
+        std::vector< std::vector< std::vector<double> > > F;    // Force tensor
 };
 
 struct trajectory_variables {
     public:
-        double *  xn;
-        double *  pn;
-        double ** Xe;
-        double ** Pe;
+        std::vector< double > xn;        // Nuclear position
+        std::vector< double > pn;        // Nuclear momentum
+        std::vector< double > Xe;        // Mapping variable position
+        std::vector< double > Pe;        // Mapping variable momentum
+};
+
+struct observables {
+    public:
+        double si;         // Identity
+        double sx;         // Pauli x matrix
+        double sy;         // Pauli y matrix
+        double sz;         // Pauli x matrix
+
+        double si0;        // Identity time zero
+        double sx0;        // Pauli x matrix time zero
+        double sy0;        // Pauli y matrix time zero
+        double sz0;        // Pauli x matrix time zero
+
+        // Correlation functions
+        std::vector< double > CII;
+        std::vector< double > CIx;
+        std::vector< double > CIy;
+        std::vector< double > CIz;
+        std::vector< double > CxI;
+        std::vector< double > Cxx;
+        std::vector< double > Cxy;
+        std::vector< double > Cxz;
+        std::vector< double > CyI;
+        std::vector< double > Cyx;
+        std::vector< double > Cyy;
+        std::vector< double > Cyz;
+        std::vector< double > CzI;
+        std::vector< double > Czx;
+        std::vector< double > Czy;
+        std::vector< double > Czz;
 };
