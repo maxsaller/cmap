@@ -1,7 +1,0 @@
-# CMAP input
-F 10            # Nuclear DoFs
-S 2             # Electronic DoFs
-
-bath   ohmic    # Type of spectral density
-kondo  0.2      # Kondo parameter (kondo=2*eta/pi)
-omegac 2.5      # Cutoff frequency

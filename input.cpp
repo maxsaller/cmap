@@ -15,11 +15,11 @@ void print_help();
  *
  */
 int parse_commandline( int nargs, char** args,
-        std::map<std::string, std::string> &cargs ){
+        std::map<std::string, std::string> &cargs ) {
 
-    for ( int i=0; i<nargs; i++ ){
+    for ( int i=0; i<nargs; ++i ) {
         if ( args[i][0] == '-' ) {
-            if ( i+1<nargs && args[i+1][0] != '-' ){
+            if ( i+1<nargs && args[i+1][0] != '-' ) {
                 cargs[args[i]] = args[i+1];       
             } else {
                 cargs[args[i]] = "";
@@ -41,27 +41,33 @@ int parse_commandline( int nargs, char** args,
  * and optionally prints help
  *
  */
-int commandline_logic( std::map<std::string, std::string> cargs ){
+int commandline_logic( std::map<std::string, std::string> &cargs ) {
     
-    std::map<std::string, std::string>::iterator it;
+    std::map<std::string, std::string>::iterator it, it1, it2;
     
     // Help flag 
     it = cargs.find("-h");
-    if ( it != cargs.end() ){
+    if ( it != cargs.end() ) {
         print_help();
         exit( EXIT_SUCCESS );
     }
-    it = cargs.find("-help");
-    if ( it != cargs.end() ){
+    it = cargs.find("--help");
+    if ( it != cargs.end() ) {
         print_help();
         exit( EXIT_SUCCESS );
     }
 
-    it = cargs.find("-input");
-    if ( it == cargs.end() ){
-        std::cout << "ERROR! -input argument is required!" << "\n\n";
+    it1 = cargs.find("--input");
+    it2 = cargs.find("-i");
+    if ( ( it1 == cargs.end() && it2 == cargs.end() ) ||
+        ( it1 != cargs.end() && it2 != cargs.end() ) ) {
+        std::cout << "ERROR! Use ONE of -i / --input!" << "\n\n";
         print_help();
         exit( EXIT_FAILURE );
+    }
+
+    if ( it1 == cargs.end() ) {
+        cargs["--input"] = cargs["-i"];
     }
 
     return 0;
@@ -82,11 +88,11 @@ int commandline_logic( std::map<std::string, std::string> cargs ){
  */
 int read_input( std::map<std::string, std::string> cargs ) { 
     std::ifstream ifile;
-    ifile.open( cargs["-input"], std::fstream::in );
+    ifile.open( cargs["--input"], std::fstream::in );
     std::string line, kw;
     do {
         std::getline( ifile, line );
-        if ( !( line[0] == '#' || line.length() == 0 ) ){
+        if ( !( line[0] == '#' || line.length() == 0 ) ) {
             std::istringstream l(line);
             l >> kw;
             if ( kw == "F" ) {
@@ -99,8 +105,24 @@ int read_input( std::map<std::string, std::string> cargs ) {
                 l >> input.eta;
             } else if ( kw == "kondo" ) {
                 l >> input.kondo;
+            } else if ( kw == "beta" ) {
+                l >> input.beta;
             } else if ( kw == "omegac" ) {
                 l >> input.omegac;
+            } else if ( kw == "eps" ) {
+                l >> input.eps;
+            } else if ( kw == "delta" ) {
+                l >> input.delta;
+            } else if ( kw == "traj" ) {
+                l >> input.traj;
+            } else if ( kw == "steps" ) {
+                l >> input.steps;
+            } else if ( kw == "dt" ) {
+                l >> input.dt;
+            } else if ( kw == "rhoe" ) {
+                l >> input.rhoe;
+            } else if ( kw == "rhon" ) {
+                l >> input.rhon;
             }
         }
     } while ( ifile.good() ); 
@@ -116,6 +138,6 @@ int read_input( std::map<std::string, std::string> cargs ) {
  * Prints command line help
  *
  */
-void print_help(){
+void print_help() {
     std::cout << "HELP!" << std::endl;
 }
