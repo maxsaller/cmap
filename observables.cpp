@@ -80,22 +80,33 @@ void observables( int ts ) {
 }
 
 void average() {
+  double norm = 1.0;
+
+  // Determine "normalization" factors of 2
+  // based on initial electornic distribution
+  if ( input.rhoe.compare( "phi" ) == 0 ) {
+    norm = 2.0;
+  } else if ( input.rhoe.compare( "phi2" ) == 0 ) {
+    norm = 8.0;
+  }
+
+  // Average Pauli matrix correlation functions
   for ( int ts=0; ts<input.steps+1; ++ts ) {
-    obs.CII[ts] /= input.traj;
-    obs.CIx[ts] /= input.traj;
-    obs.CIy[ts] /= input.traj;
-    obs.CIz[ts] /= input.traj;
-    obs.CxI[ts] /= input.traj;
-    obs.Cxx[ts] /= input.traj;
-    obs.Cxy[ts] /= input.traj;
-    obs.Cxz[ts] /= input.traj;
-    obs.CyI[ts] /= input.traj;
-    obs.Cyx[ts] /= input.traj;
-    obs.Cyy[ts] /= input.traj;
-    obs.Cyz[ts] /= input.traj;
-    obs.CzI[ts] /= input.traj;
-    obs.Czx[ts] /= input.traj;
-    obs.Czy[ts] /= input.traj;
-    obs.Czz[ts] /= input.traj;
+    obs.CII[ts] = obs.CII[ts] * norm / input.traj;
+    obs.CIx[ts] = obs.CIx[ts] * norm / input.traj;
+    obs.CIy[ts] = obs.CIy[ts] * norm / input.traj;
+    obs.CIz[ts] = obs.CIz[ts] * norm / input.traj;
+    obs.CxI[ts] = obs.CxI[ts] * norm / input.traj;
+    obs.Cxx[ts] = obs.Cxx[ts] * norm / input.traj;
+    obs.Cxy[ts] = obs.Cxy[ts] * norm / input.traj;
+    obs.Cxz[ts] = obs.Cxz[ts] * norm / input.traj;
+    obs.CyI[ts] = obs.CyI[ts] * norm / input.traj;
+    obs.Cyx[ts] = obs.Cyx[ts] * norm / input.traj;
+    obs.Cyy[ts] = obs.Cyy[ts] * norm / input.traj;
+    obs.Cyz[ts] = obs.Cyz[ts] * norm / input.traj;
+    obs.CzI[ts] = obs.CzI[ts] * norm / input.traj;
+    obs.Czx[ts] = obs.Czx[ts] * norm / input.traj;
+    obs.Czy[ts] = obs.Czy[ts] * norm / input.traj;
+    obs.Czz[ts] = obs.Czz[ts] * norm / input.traj;
   }
 }

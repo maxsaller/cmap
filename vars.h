@@ -73,6 +73,9 @@ struct observables {
         double sy0;        // Pauli y matrix time zero
         double sz0;        // Pauli x matrix time zero
 
+        // Time
+        std::vector< double > time;
+
         // Correlation functions
         std::vector< double > CII;
         std::vector< double > CIx;

@@ -56,11 +56,13 @@ int main( int argc, char** args ) {
 
         // Compute time-zero operators and observables
         time_zero_ops();
-        std::cout << "Trajectoy: " << t
-                  << "\n- sig_0 (0) = " << obs.si0
-                  << "\n- sig_x (0) = " << obs.sx0
-                  << "\n- sig_y (0) = " << obs.sy0
-                  << "\n- sig_z (0) = " << obs.sz0 << "\n\n";
+        if ( t%(input.traj/100) == 0 ){
+            std::cout << "Trajectoy: " << t
+                      << "\n- sig_0 (0) = " << obs.si0
+                      << "\n- sig_x (0) = " << obs.sx0
+                      << "\n- sig_y (0) = " << obs.sy0
+                      << "\n- sig_z (0) = " << obs.sz0 << "\n\n";
+        }
         observables( 0 );
 
         // Propagate trajectories
