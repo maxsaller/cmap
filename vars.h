@@ -49,8 +49,8 @@ struct potential {
     public:
         double V0;                                              // State-independent potential
         std::vector< std::vector<double> >  V;                  // Potential energy matrix
-        std::vector< double > F0;                               // State-independent fortce
-        std::vector< std::vector< std::vector<double> > > F;    // Force tensor
+        std::vector< double > G0;                               // State-independent fortce
+        std::vector< std::vector< std::vector<double> > > G;    // Force tensor
 };
 
 struct trajectory_variables {
@@ -73,10 +73,13 @@ struct observables {
         double sy0;        // Pauli y matrix time zero
         double sz0;        // Pauli x matrix time zero
 
+        std::vector< double > pop;
+        std::vector< double > pop0;
+
         // Time
         std::vector< double > time;
 
-        // Correlation functions
+        // Pauli correlation functions
         std::vector< double > CII;
         std::vector< double > CIx;
         std::vector< double > CIy;
@@ -93,4 +96,7 @@ struct observables {
         std::vector< double > Czx;
         std::vector< double > Czy;
         std::vector< double > Czz;
+
+        // Population correlation Functions
+        std::vector< std::vector< std::vector< double > > > Cpop;
 };

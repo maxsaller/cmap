@@ -1,19 +1,21 @@
-# CMAP INPUT
-# Everything in atomic units
+# CMAP - EXAMPLE INPUT
+# SPIN-BOSON - OHMIC BATH
+# SEE JCP 150,, 071101 - FIG 1 (DOUBLE SEO)
+# https://doi.org/10.1063/1.5082596 
 #
-F 10            # Nuclear DoFs
+F 36            # Nuclear DoFs
 S 2             # Electronic DoFs
 
-eps    2.0      # Spin Boson energy bias
+eps    1.0      # Spin Boson energy bias
 delta  1.0      # Spin Boson coupling
 beta   10.0     # Inverse temperature
 bath   ohmic    # Type of spectral density
 kondo  0.2      # Kondo parameter (kondo=2*eta/pi)
 omegac 2.5      # Cutoff frequency
 
-traj   100      # Number of trajectories
-steps  1000     # Number of timesteps
-dt     42.      # Timestep duration
+traj   100000   # Number of trajectories
+steps  1500     # Number of timesteps
+dt     0.01     # Timestep duration
 
 rhoe   phi2     # Initial density matrix of mapping variables
 rhon   thermal  # Initial density matrix of nuclear variables

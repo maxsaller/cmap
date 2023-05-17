@@ -28,12 +28,12 @@ void subsystem_init() {
     for ( int i=0; i<input.S; ++i ) {
         pot.V[i].resize(input.S);
     }
-    pot.F0.resize(input.S);
-    pot.F.resize(input.F);
-    for ( int i=0; i<input.S; ++i ) {
-        pot.F[i].resize(input.S);
+    pot.G0.resize(input.F);
+    pot.G.resize(input.F);
+    for ( int i=0; i<input.F; ++i ) {
+        pot.G[i].resize(input.S);
         for ( int j=0; j<input.S; ++j ) {
-            pot.F[i][j].resize(input.S);
+            pot.G[i][j].resize(input.S);
         }
     }
 
@@ -95,7 +95,7 @@ void sb_pot() {
     pot.V0 = 0;
     for ( int i=0; i<input.F; ++i ) {
         pot.V0 += 0.5 * bath.mass[i] * bath.omega[i]*bath.omega[i] * traj.xn[i]*traj.xn[i];
-        pot.F0[i] = bath.mass[i] * bath.omega[i]*bath.omega[i] * traj.xn[i];
+        pot.G0[i] = bath.mass[i] * bath.omega[i]*bath.omega[i] * traj.xn[i];
     }
 
     // Potential and force matrices
@@ -104,8 +104,8 @@ void sb_pot() {
             pot.V[i][j] = subsystem.V[i][j];
             for ( int k=0; k<input.F; ++k ){
                 pot.V[i][j] += bath.c[k] * traj.xn[k];
-                pot.F[k][i][j] = 0.;
-                pot.F[k][i][i] = bath.c[k];
+                pot.G[k][i][j] = 0.;
+                pot.G[k][i][i] = bath.c[k];
             }
         }
     }
@@ -118,10 +118,10 @@ void sb_pot() {
 
     double ftrace [input.F];
     for ( int i=0; i<input.F; ++i ){
-        ftrace[i] = ( pot.F[i][0][0] + pot.F[i][1][1] ) / 2.;
-        pot.F[i][0][0] -= ftrace[i];
-        pot.F[i][1][1] -= ftrace[i];
-        pot.F0[i] += ftrace[i];
+        ftrace[i] = ( pot.G[i][0][0] + pot.G[i][1][1] ) / 2.;
+        pot.G[i][0][0] -= ftrace[i];
+        pot.G[i][1][1] -= ftrace[i];
+        pot.G0[i] += ftrace[i];
     }
 
 }

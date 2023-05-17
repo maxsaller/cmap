@@ -1,8 +1,9 @@
 #include "common.h"
 #include "input.h"
 #include "output.h"
-#include "observables.h"
+#include "dynamics.h"
 #include "spin_boson.h"
+#include "observables.h"
 #include "spectral_density.h"
 
 struct subsystem_variables subsystem;
@@ -67,15 +68,14 @@ int main( int argc, char** args ) {
 
         // Propagate trajectories
         for ( int ts=1; ts<=input.steps; ++ts ) {
-
-            // Propagate for a single timesteps
-
+            
+            // Integrate equations-of-motion one timestep
+            integrate_eoms();
             // Compute time-t operators
             time_t_ops();
 
             // Compute observables
             observables( ts );
-
 
         }
 
