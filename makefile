@@ -1,7 +1,7 @@
 CC=g++
-CFLAGS=-fopenmp
-FDEBUG=-Wall
-FFAST=-O3 -fopenmp
+CFLAGS=-fopenmp -I /usr/local/include/eigen3
+FDEBUG=-Wall -I /usr/local/include/eigen3
+FFAST=-O3 -fopenmp -I /usr/local/include/eigen3
 
 DEPS=input.o output.o observables.o spectral_density.o spin_boson.o dynamics.o cmap.o
 

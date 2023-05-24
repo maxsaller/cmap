@@ -70,7 +70,15 @@ int main( int argc, char** args ) {
         for ( int ts=1; ts<=input.steps; ++ts ) {
             
             // Integrate equations-of-motion one timestep
-            integrate_eoms();
+            if ( input.alg.compare("vverlet") == 0 ){
+                eom_vverlet();
+            } else if ( input.alg.compare("diag") == 0 ){
+                eom_diag();
+            } else {
+                std::cout << "ERROR: Options for input argument are:\n"
+                          << "       alg = ['vverlet', 'diag']\n";
+                exit( EXIT_FAILURE );
+            }
             // Compute time-t operators
             time_t_ops();
 

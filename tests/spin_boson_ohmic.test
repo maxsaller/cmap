@@ -16,6 +16,7 @@ omegac 2.5      # Cutoff frequency
 traj   100000   # Number of trajectories
 steps  1500     # Number of timesteps
 dt     0.01     # Timestep duration
+alg    diag     # Algorithm to intefrate eqs. of motion
 
 rhoe   phi2     # Initial density matrix of mapping variables
 rhon   thermal  # Initial density matrix of nuclear variables

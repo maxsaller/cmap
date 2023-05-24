@@ -119,6 +119,8 @@ int read_input( std::map<std::string, std::string> cargs ) {
                 l >> input.steps;
             } else if ( kw == "dt" ) {
                 l >> input.dt;
+            } else if ( kw == "alg" ) {
+                l >> input.alg;
             } else if ( kw == "rhoe" ) {
                 l >> input.rhoe;
             } else if ( kw == "rhon" ) {

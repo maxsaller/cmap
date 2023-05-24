@@ -1,3 +1,4 @@
 #include "common.h"
 
-int integrate_eoms();
+int eom_vverlet();
+int eom_diag();

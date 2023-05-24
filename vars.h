@@ -24,6 +24,7 @@ struct input_variables {
         int traj;           // Number of trajectories
         int steps;          // Number of timesteps per trajectory
         double dt;          // Duration of timestep
+        std::string alg;    // EOM algorithm (either 'vverlet' or 'diag')
 
         std::string rhoe;   // Initial density matrix of mapping variables
         std::string rhon;   // Initial density matrix of nuclear variables

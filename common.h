@@ -4,10 +4,13 @@
 #include <random>
 #include <stdio.h>
 #include <cstring>
-#include <complex>
+#include <complex.h>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
+
+// Eigen for linear algebra
+#include <Eigen/Dense>
 
 // HEADER FILE FOR GLOBAL VARIABLES
 #include "vars.h"
